@@ -1,19 +1,19 @@
 class Solution {
 public:
     vector<vector<int>> findDifference(vector<int>& nums1, vector<int>& nums2) {
-        unordered_map<int,int>map1;
-        unordered_map<int,int>map2;
-        for(int i:nums1){map1[i]++;}
-        for(int i:nums2){map2[i]++;}
+        unordered_set<int>s1(nums1.begin(),nums1.end());
+        unordered_set<int>s2(nums2.begin(),nums2.end());
+        
         vector<int>a,b;
-        for(auto &i:map1){
-            if(map2[i.first]==0){
-                a.push_back(i.first);
+
+        for(auto i:s1){
+            if(!s2.count(i)){
+                a.push_back(i);
             }
         }
-        for(auto &i:map2){
-            if(map1[i.first]==0){
-                b.push_back(i.first);
+        for(auto i:s2){
+            if(!s1.count(i)){
+                b.push_back(i);
             }
         }
         return {a,b};
