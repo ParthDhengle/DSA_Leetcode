@@ -1,30 +1,46 @@
+struct Node{
+    Node * link[26];
+    bool flag=false;
+};
+
 class Trie {
 public:
- vector<string>tri;
+Node * root;
     Trie() {
-       
+        root = new Node();
     }
     
     void insert(string word) {
-        tri.push_back(word);
+        Node * node = root;
+        for(int i=0;i<word.size();i++){
+            if(node-> link[word[i]-'a'] ==NULL ){
+                node->link[word[i]-'a']=new Node();
+            }
+            node = node->link[word[i] - 'a'];
+        }
+        node->flag=true;
     }
     
     bool search(string word) {
-        int n=tri.size();
-        for(int i=0;i<n;i++){
-            if(tri[i]==word){return true;}
-        }return false;
+        Node * node=root;
+        for(int i=0;i<word.size();i++){
+            if(node->link[word[i] -'a'] ==NULL){
+                return false;
+            }
+            node = node->link[word[i] - 'a' ];
+        }
+        return node->flag;
     }
     
     bool startsWith(string prefix) {
-        int n=tri.size();
-        int pfx_sz=prefix.size();
-        for(int i=0;i<n;i++){
-            if(prefix== tri[i].substr(0,pfx_sz)){
-                return true;
+        Node * node=root;
+        for(int i=0;i<prefix.size();i++){
+            if(node->link[prefix[i] -'a'] ==NULL){
+                return false;
             }
+            node = node->link[prefix[i] - 'a' ];
         }
-        return false;
+        return true;
     }
 };
 
