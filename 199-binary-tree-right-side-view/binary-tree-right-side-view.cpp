@@ -11,17 +11,20 @@
  */
 class Solution {
 public:
-    void right_dfs(TreeNode* node,vector<int>&ans,int pos){
-        if(node==NULL)return;
-        if(pos==ans.size()){ans.push_back(node->val);}
-        
-        right_dfs(node->right,ans,pos+1);
-        right_dfs(node->left,ans,pos+1);
+    void recur(TreeNode* node ,vector<int> & ans,int & height,int curr ){
+        if(!node)return;
+        if(curr>=height){
+            ans.push_back(node->val);
+            height++;
+        }
+        recur(node->right, ans,height,curr+1);
+        recur(node->left,ans,height,curr+1);
 
     }
     vector<int> rightSideView(TreeNode* root) {
         vector<int>ans;
-        right_dfs(root,ans,0);
+        int height=0;
+        recur(root,ans,height,0);
         return ans;
     }
 };
