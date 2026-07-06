@@ -11,22 +11,18 @@
  */
 class Solution {
 public:
-void rec(TreeNode* node , vector<int>& arr){
-    if(!node)return;
-    arr.push_back(node->val);
-    rec(node->left,arr);
-    rec(node->right,arr);
-}
+    void rec(TreeNode* node , int &Min , int &prev){
+        if(!node)return;
+        rec(node->left,Min,prev);
+        Min=min( Min ,abs(node->val - prev));
+        prev=node->val;
+        rec(node->right , Min,prev);
+    }
     int getMinimumDifference(TreeNode* root) {
-        vector<int>arr;
-        rec(root, arr);
-        sort(arr.begin() , arr.end());
+        int Min=100000;
+        int prev=100000;
 
-        int Min=1000000;
-        int n=arr.size();
-        for(int i=0;i<n-1;i++){
-            Min=min(Min , abs(arr[i+1]-arr[i]));
-        }
+        rec(root,Min,prev);
         return Min;
     }
 };
