@@ -10,37 +10,29 @@
  */
 class Solution {
 public:
-    ListNode* merge2lists(ListNode* l1,ListNode* l2){
+
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        priority_queue<pair<int,ListNode*> , vector<pair<int,ListNode*>> , greater<pair<int,ListNode*>> >min_heap;
         
-        if(!l1)return l2;
-        if(!l2)return l1;
+        for(auto list:lists){
+            if(list){
+                min_heap.push({list->val,list});
+            }
+        }
+
         ListNode* dummy=new ListNode(-1);
         ListNode* head=dummy;
 
-        while(l1!=NULL and l2!=NULL){
-            if(l1->val <= l2->val){
-                head->next=l1;
-                l1=l1->next;
-            }else{
-                head->next=l2;
-                l2=l2->next;
-            }
+        while(!min_heap.empty()){
+            ListNode* curr=min_heap.top().second;
+            min_heap.pop();
+            head->next=curr;
             head=head->next;
-        }
-        if(l1!=NULL){
-            head->next=l1;
-        }
-        if(l2!=NULL){
-            head->next=l2;
+
+            if(curr->next){
+                min_heap.push({curr->next->val,curr->next});
+            }
         }
         return dummy->next;
-    }
-
-    ListNode* mergeKLists(vector<ListNode*>& lists) {
-        ListNode* head=NULL;
-        for(auto l:lists){
-            head= merge2lists(head,l);
-        }
-        return head;
     }
 };
