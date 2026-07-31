@@ -10,14 +10,12 @@ public:
                 carry=1;
                 digits[i]=sum%10;
             }else{
-                carry=0;
                 digits[i]=sum;
+                return digits;
             }
         }
         if(carry){
-            vector<int>temp={1};
-            temp.insert(temp.end(),digits.begin(),digits.end());
-            digits=temp;
+            digits.insert(digits.begin(),1);
         }
         return digits;
     }
