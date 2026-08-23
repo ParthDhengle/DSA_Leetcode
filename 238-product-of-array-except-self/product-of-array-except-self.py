@@ -5,8 +5,6 @@ class Solution:
 
         for i in range(1,len(nums)):
             ans[i]=ans[i-1]*nums[i-1]
-
-        print(ans)
         curr=1
         for i in range(n-1,-1,-1):
             ans[i]=ans[i]*curr
